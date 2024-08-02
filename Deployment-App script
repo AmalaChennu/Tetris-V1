@@ -35,7 +35,6 @@ pipeline {
             }
         }
     }
-}
 post{
    success{
          echo 'Deployment file updated and pushed successfully'
@@ -44,3 +43,4 @@ post{
          echo 'Failed to update and push the Deployment file'
     }
   }
+ }
