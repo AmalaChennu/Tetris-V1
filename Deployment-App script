@@ -3,7 +3,7 @@ pipeline {
     environment {
         GIT_REPO_NAME = "Tetris-manifest"
         GIT_USER_NAME = "AmalaChennu"
-        NEW_IMAGE_NAME = "emergencydevops/dockerlabs:latest"
+        NEW_IMAGE_NAME = "emergencydevops/dockerlabs:latest"    //-----(dockerhub image name)//
     }
     tools{
         jdk 'jdk17'
@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/RajinikanthVadla/Tetris-manifest.git'
+                git branch: 'main', url: 'https://github.com/AmalaChennu/Tetris-manifest.git'
             }
         }
         stage('Update Deployment File') {
@@ -36,3 +36,11 @@ pipeline {
         }
     }
 }
+post{
+   success{
+         echo 'Deployment file updated and pushed successfully'
+    }
+   failure{
+         echo 'Failed to update and push the Deployment file'
+    }
+  }
