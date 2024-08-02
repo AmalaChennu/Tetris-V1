@@ -1,60 +1,14 @@
 pipeline {
     agent any
-    tools {
-        jdk 'jdk17'
-        nodejs 'node16'
-    }
     environment {
-        SCANNER_HOME = tool 'sonar-scanner'
         GIT_REPO_NAME = "Tetris-manifest"
-        GIT_USER_NAME = "RajinikanthVadla"
-        GITHUB_TOKEN = credentials('github') // Assuming you've set up a secret text credential named 'github' for the GitHub token
+        GIT_USER_NAME = "AmalaChennu"
+        NEW_IMAGE_NAME = "emergencydevops/dockerlabs:latest"
+    }
+    tools{
+        jdk 'jdk17'
     }
     stages {
-        stage('clean workspace') {
-            steps {
-                cleanWs()
-            }
-        }
-        stage('Checkout from Git') {
-            steps {
-                git branch: 'main', url: 'https://github.com/RajinikanthVadla/Tetris-V1.git'
-            }
-        }
-        // stage("Sonarqube Analysis") {
-        //     steps {
-        //         withSonarQubeEnv('sonar-server') {
-        //             sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=TetrisVersion1.0 \
-        // //             -Dsonar.projectKey=TetrisVersion1.0 '''
-        //         }
-        //     }
-        // }
-        // stage('Install Dependencies') {
-        //     steps {
-        //         sh "npm install"
-        //     }
-        // }
-        // stage('TRIVY FS SCAN') {
-        //     steps {
-        //         sh "trivy fs . > trivyfs.txt"
-        //     }
-        // }
-        stage("Docker Build & Push") {
-            steps {
-                script {
-                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
-                        sh "docker build -t tetrisv1 ."
-                        sh "docker tag tetrisv1 rajinikanthvadla/dockerchappie:latest"
-                        sh "docker push rajinikanthvadla/dockerchappie:latest"
-                    }
-                }
-            }
-        }
-        // stage("TRIVY") {
-        //     steps {
-        //         sh "trivy image rajinikanthvadla/dockerchappie:latest > trivyimage.txt"
-        //     }
-        // }
         stage('Checkout Code') {
             steps {
                 git branch: 'main', url: 'https://github.com/RajinikanthVadla/Tetris-manifest.git'
